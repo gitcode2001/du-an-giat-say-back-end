@@ -1,6 +1,8 @@
 package com.example.duangiatsay.service;
 
 import com.example.duangiatsay.model.Account;
+
+import java.util.List;
 import java.util.Map;
 
 public interface IAccountService {
@@ -12,4 +14,5 @@ public interface IAccountService {
     Map<String, Object> newPassword(String emailOrUsername, String password);
     Map<String, Object> lockAccount(Long accountId);
     Account findAccountByUsername(String username);
+    List<Account> getAllShippers();
 }

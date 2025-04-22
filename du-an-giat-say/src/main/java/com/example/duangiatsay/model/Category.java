@@ -1,29 +1,30 @@
 package com.example.duangiatsay.model;
 
-import com.example.duangiatsay.model.LaundryOrder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "shipper")
-public class Shipper {
+@Table(name = "category")
+public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName;
-    private String phoneNumber;
-    private String status;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    @OneToMany(mappedBy = "shipper")
-    private List<LaundryOrder> assignedOrders;
+    private String description;
+
+    // Bạn có thể thêm quan hệ nếu cần (ví dụ: danh sách sản phẩm)
+    // @OneToMany(mappedBy = "category")
+    // private List<Product> products;
+
 }

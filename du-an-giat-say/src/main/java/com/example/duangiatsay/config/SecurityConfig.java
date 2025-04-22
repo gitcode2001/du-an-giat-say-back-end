@@ -45,6 +45,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/carts", "/api/drinks").permitAll()
                         .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/api/login/change-password").authenticated()
+                        .requestMatchers("api/orders").authenticated()
+                        .requestMatchers("api/laundry-items").authenticated()
                         .requestMatchers("/api/admin/check_account").permitAll()
                         .requestMatchers( "/api/news/*/approve").hasAuthority("admin")
                         .requestMatchers("/api/admin/**").hasAuthority("admin")

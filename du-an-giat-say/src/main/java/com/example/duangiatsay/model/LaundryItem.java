@@ -1,10 +1,8 @@
 package com.example.duangiatsay.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -19,8 +17,8 @@ public class LaundryItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnoreProperties("items")
     private LaundryOrder order;
-
     private String type;
     private Integer quantity;
     private Double pricePerItem;

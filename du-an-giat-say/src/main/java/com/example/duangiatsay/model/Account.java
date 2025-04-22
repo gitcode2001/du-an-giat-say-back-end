@@ -1,13 +1,13 @@
 package com.example.duangiatsay.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,13 +34,17 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonIgnoreProperties("accounts")
     private Role role;
 
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonBackReference
     private User user;
 
-    // ✅ Helper method
+    @OneToMany(mappedBy = "shipper")
+    @JsonIgnore
+    private List<LaundryOrder> shippingOrders;
+
     public boolean isLocked() {
         return this.locked != null && this.locked == 1;
     }

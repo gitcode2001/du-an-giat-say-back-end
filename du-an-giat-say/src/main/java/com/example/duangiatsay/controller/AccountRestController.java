@@ -4,6 +4,7 @@ import com.example.duangiatsay.dto.ChangePasswordRequest;
 import com.example.duangiatsay.dto.ForGotPassWordDTO;
 import com.example.duangiatsay.dto.ResetPasswordDTO;
 import com.example.duangiatsay.dto.VerifyOtpDTO;
+import com.example.duangiatsay.model.Account;
 import com.example.duangiatsay.model.User;
 import com.example.duangiatsay.service.IAccountService;
 import com.example.duangiatsay.service.IUserService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -147,4 +149,10 @@ public class AccountRestController {
     public ResponseEntity<String> getRole(@RequestParam String username) {
         return ResponseEntity.ok(accountService.getRoleIdByUsername(username));
     }
+    // AccountController.java
+    @GetMapping("/shippers")
+    public ResponseEntity<List<Account>> getAllShippers() {
+        return ResponseEntity.ok(accountService.getAllShippers());
+    }
+
 }

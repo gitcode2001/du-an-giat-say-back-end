@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -146,5 +147,10 @@ public class AccountService implements IAccountService {
     @Override
     public Account findAccountByUsername(String username) {
         return accountRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<Account> getAllShippers() {
+        return accountRepository.findAllShipperAccounts();
     }
 }

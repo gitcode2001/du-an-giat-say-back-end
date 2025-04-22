@@ -1,5 +1,6 @@
 package com.example.duangiatsay.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role")
+    @JsonIgnore
     private List<Account> accounts;
 
     public String getNameRoles() {

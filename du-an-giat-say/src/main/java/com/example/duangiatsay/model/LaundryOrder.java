@@ -1,10 +1,8 @@
 package com.example.duangiatsay.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,20 +20,23 @@ public class LaundryOrder {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"account", "orders"})
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "shipper_id")
-    private Shipper shipper;
-
+    @JsonIgnoreProperties({"user", "shippingOrders", "password", "role"})
+    private Account shipper;
     private LocalDateTime pickupTime;
     private LocalDateTime deliveryTime;
     private String status;
     private String note;
     private Double totalPrice;
+    private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order")
     private List<LaundryItem> items;
 }
