@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "laundry_order")
 public class LaundryOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +28,15 @@ public class LaundryOrder {
     @JoinColumn(name = "shipper_id")
     @JsonIgnoreProperties({"user", "shippingOrders", "password", "role"})
     private Account shipper;
+
     private LocalDateTime pickupTime;
     private LocalDateTime deliveryTime;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OrderStatus status = OrderStatus.PENDING;
+
+
     private String note;
     private Double totalPrice;
     private String address;

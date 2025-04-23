@@ -11,4 +11,6 @@ public interface ILaundryOrderService {
     List<LaundryOrder> getOrdersByUserId(Long userId);
     LaundryOrder updateOrderStatus(Long id, String status);
     void deleteOrder(Long id);
+    List<LaundryOrder> getOrdersByShipperId(Long shipperId);
+
 }

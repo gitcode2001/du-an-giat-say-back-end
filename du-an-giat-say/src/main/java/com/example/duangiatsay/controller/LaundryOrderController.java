@@ -1,6 +1,9 @@
 package com.example.duangiatsay.controller;
 
+import com.example.duangiatsay.model.Account;
 import com.example.duangiatsay.model.LaundryOrder;
+import com.example.duangiatsay.model.OrderStatus;
+import com.example.duangiatsay.model.User;
 import com.example.duangiatsay.repository.AccountRepository;
 import com.example.duangiatsay.repository.UserRepository;
 import com.example.duangiatsay.service.ILaundryOrderService;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -23,15 +27,40 @@ public class LaundryOrderController {
 
     @Autowired
     private AccountRepository accountRepository;
+    @GetMapping("/shipper/{shipperId}")
+    public ResponseEntity<List<LaundryOrder>> getOrdersByShipperId(@PathVariable Long shipperId) {
+        return ResponseEntity.ok(orderService.getOrdersByShipperId(shipperId));
+    }
+
 
     @PostMapping
-    public ResponseEntity<LaundryOrder> createOrder(@RequestBody LaundryOrder order) {
+    public ResponseEntity<?> createOrder(@RequestBody LaundryOrder order) {
         if (order.getUser() != null && order.getUser().getId() != null) {
-            order.setUser(userRepository.findById(order.getUser().getId()).orElse(null));
+            User user = userRepository.findById(order.getUser().getId()).orElse(null);
+            if (user == null) {
+                return ResponseEntity.badRequest().body("❌ Không tìm thấy người dùng với ID: " + order.getUser().getId());
+            }
+            order.setUser(user);
         }
+
         if (order.getShipper() != null && order.getShipper().getId() != null) {
-            order.setShipper(accountRepository.findById(order.getShipper().getId()).orElse(null));
+            Account shipper = accountRepository.findById(order.getShipper().getId()).orElse(null);
+            if (shipper == null) {
+                return ResponseEntity.badRequest().body("❌ Không tìm thấy shipper với ID: " + order.getShipper().getId());
+            }
+            order.setShipper(shipper);
         }
+
+        if (order.getStatus() == null) {
+            order.setStatus(OrderStatus.PENDING);
+        } else {
+            try {
+                order.setStatus(OrderStatus.fromValue(order.getStatus().toString()));
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body("❌ Trạng thái không hợp lệ: " + order.getStatus());
+            }
+        }
+
         return ResponseEntity.ok(orderService.createOrder(order));
     }
 
@@ -51,8 +80,13 @@ public class LaundryOrderController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<LaundryOrder> updateOrderStatus(@PathVariable Long id, @RequestParam String status) {
-        return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
+    public ResponseEntity<?> updateOrderStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        String status = request.get("status");
+        try {
+            return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("❌ Trạng thái không hợp lệ: " + status);
+        }
     }
 
     @DeleteMapping("/{id}")
