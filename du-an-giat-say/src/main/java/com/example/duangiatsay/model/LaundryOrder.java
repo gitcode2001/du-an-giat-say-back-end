@@ -28,6 +28,9 @@ public class LaundryOrder {
     @JoinColumn(name = "shipper_id")
     @JsonIgnoreProperties({"user", "shippingOrders", "password", "role"})
     private Account shipper;
+    @Column(name = "deleted_by_shipper")
+    private Boolean deletedByShipper = false;
+
 
     private LocalDateTime pickupTime;
     private LocalDateTime deliveryTime;

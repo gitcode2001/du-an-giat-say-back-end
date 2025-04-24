@@ -31,6 +31,16 @@ public class LaundryOrderController {
     public ResponseEntity<List<LaundryOrder>> getOrdersByShipperId(@PathVariable Long shipperId) {
         return ResponseEntity.ok(orderService.getOrdersByShipperId(shipperId));
     }
+    @PutMapping("/{id}/soft-delete")
+    public ResponseEntity<?> softDeleteOrderByShipper(@PathVariable Long id) {
+        try {
+            orderService.softDeleteOrderByShipper(id);
+            return ResponseEntity.ok("✅ Đơn hàng đã được ẩn khỏi danh sách shipper!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("❌ Không thể xoá mềm đơn hàng: " + e.getMessage());
+        }
+    }
+
 
 
     @PostMapping

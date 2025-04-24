@@ -36,6 +36,8 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+    implementation 'com.paypal.sdk:rest-api-sdk:1.14.0' // Hoặc phiên bản mới hơn nếu cần
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

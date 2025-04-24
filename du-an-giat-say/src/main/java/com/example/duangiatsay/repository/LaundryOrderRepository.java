@@ -12,4 +12,6 @@ public interface LaundryOrderRepository extends JpaRepository<LaundryOrder, Long
     List<LaundryOrder> findByUserId(Long userId);
     List<LaundryOrder> findByStatus(OrderStatus status);
     List<LaundryOrder> findByShipperId(Long shipperId);
+    List<LaundryOrder> findByShipperIdAndDeletedByShipperFalse(Long shipperId);
+
 }

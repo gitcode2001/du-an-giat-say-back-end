@@ -62,8 +62,15 @@ public class LaundryOrderService implements ILaundryOrderService {
     public List<LaundryOrder> getOrdersByShipperId(Long shipperId) {
         return orderRepository.findByShipperId(shipperId);
     }
-
-
+    @Override
+    public void softDeleteOrderByShipper(Long id) {
+        LaundryOrder order = getOrderById(id);
+        if (order != null) {
+            order.setDeletedByShipper(true);
+            order.setUpdatedAt(LocalDateTime.now());
+            orderRepository.save(order);
+        }
+    }
     @Override
     public LaundryOrder updateOrderStatus(Long id, String status) {
         LaundryOrder order = getOrderById(id);
@@ -77,9 +84,8 @@ public class LaundryOrderService implements ILaundryOrderService {
                 payload.put("status", newStatus.name());
                 payload.put("displayName", newStatus.getDisplayName());
                 ObjectMapper mapper = new ObjectMapper();
-                String jsonPayload = mapper.writeValueAsString(payload);
+                 String jsonPayload = mapper.writeValueAsString(payload);
                 messagingTemplate.convertAndSend("/topic/delivery/" + order.getId(), payload); // Gửi object, KHÔNG dùng ObjectMapper để stringify
-
                 return orderRepository.save(order);
             } catch (IllegalArgumentException e) {
                 throw new RuntimeException("❌ Trạng thái không hợp lệ: " + status);
