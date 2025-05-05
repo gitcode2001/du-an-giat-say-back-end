@@ -35,6 +35,7 @@ public class CategoryService implements ICategoryService {
         if (existing != null) {
             existing.setName(category.getName());
             existing.setDescription(category.getDescription());
+            existing.setImage(category.getImage());
             return categoryRepository.save(existing);
         }
         return null;

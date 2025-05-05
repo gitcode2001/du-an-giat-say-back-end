@@ -30,6 +30,14 @@ public class LaundryOrder {
     private Account shipper;
     @Column(name = "deleted_by_shipper")
     private Boolean deletedByShipper = false;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", nullable = false)
+    private PaymentMethod paymentMethod;
+    @Column(name = "deleted_by_admin")
+    private Boolean deletedByAdmin = false;
+
+
+
 
 
     private LocalDateTime pickupTime;
@@ -49,4 +57,6 @@ public class LaundryOrder {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("order")
     private List<LaundryItem> items;
+
+
 }

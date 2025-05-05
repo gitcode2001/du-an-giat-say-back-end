@@ -8,7 +8,8 @@ public enum OrderStatus {
     PICKED_UP("Đã lấy đồ"),
     IN_PROCESS("Đang giặt"),
     DELIVERED("Đã giao"),
-    CANCELLED("Đã huỷ");
+    CANCELLED("Đã huỷ"),
+    PAID("Thanh toán");
 
     private final String displayName;
 

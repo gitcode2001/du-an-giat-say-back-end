@@ -23,6 +23,8 @@ public class Category {
 
     private String description;
 
+    private String image;
+
     // Bạn có thể thêm quan hệ nếu cần (ví dụ: danh sách sản phẩm)
     // @OneToMany(mappedBy = "category")
     // private List<Product> products;
