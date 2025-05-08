@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "role")
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +32,12 @@ public class Role {
     @JsonIgnore
     private List<Account> accounts;
 
-    public String getNameRoles() {
+    // Lấy tên của vai trò
+    public String getRoleName() {
         return name.name();
+    }
+
+    public String toUpperCase() {
+        return name.name().toUpperCase();
     }
 }

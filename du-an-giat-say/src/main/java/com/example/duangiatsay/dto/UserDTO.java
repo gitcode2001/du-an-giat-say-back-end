@@ -32,7 +32,7 @@ public class UserDTO {
                 this.username = user.getAccount().getUsername();
                 this.locked = user.getAccount().getLocked();
                 if (user.getAccount().getRole() != null) {
-                    this.role = user.getAccount().getRole().getNameRoles();
+                    this.role = user.getAccount().getRole().getRoleName();
                 }
             }
         }

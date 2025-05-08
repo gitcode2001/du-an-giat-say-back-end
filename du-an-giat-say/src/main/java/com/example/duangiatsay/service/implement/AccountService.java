@@ -67,7 +67,7 @@ public class AccountService implements IAccountService {
     @Override
     public String getRoleIdByUsername(String username) {
         Account account = accountRepository.findByUsername(username);
-        return (account != null && account.getRole() != null) ? account.getRole().getNameRoles() : null;
+        return (account != null && account.getRole() != null) ? account.getRole().getRoleName() : null;
     }
 
     @Override

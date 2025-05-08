@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/check_account").permitAll()
                         .requestMatchers( "/api/news/*/approve").hasAuthority("admin")
                         .requestMatchers("/api/admin/**").hasAuthority("admin")
+                        .requestMatchers("/api/chat").authenticated()
                         .requestMatchers("/api/information", "/api/{id}").hasAuthority("employ")
                         .anyRequest().authenticated()
                 )
